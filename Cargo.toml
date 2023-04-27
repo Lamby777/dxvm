@@ -11,3 +11,4 @@ keywords = ["virtual-machine", "vm", "sparklet"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+libdx = "0.2.0"

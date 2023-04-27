@@ -1,14 +1,13 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+/*
+* "some helpful information about the package"
+* - Cherry 4/27/2023
+*/
 
 #[cfg(test)]
-mod tests {
-    use super::*;
+mod tests;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+use libdx::Result;
+
+pub fn execute_binary(executable: &[u64]) -> Result<i64> {
+	Ok(0)
 }
