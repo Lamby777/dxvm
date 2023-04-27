@@ -12,3 +12,4 @@ keywords = ["virtual-machine", "vm", "sparklet"]
 
 [dependencies]
 libdx = "0.2.0"
+phf = { version = "0.11.1", features = ["macros"] }
