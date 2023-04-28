@@ -1,25 +1,23 @@
-name: Clippy Check
+# taken from here: https://kerkour.com/rust-github-actions-ci-cd
+name: CI
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-
-env:
-  CARGO_TERM_COLOR: always
+    branches:
+      - master
+      - dev
 
 jobs:
-  clippy_check:
+  build_and_test:
+    name: Rust project
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
-            toolchain: nightly
-            components: clippy
-            override: true
-      - uses: actions-rs/clippy-check@v1
+          toolchain: stable
+      - uses: actions-rs/cargo@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-features
+          command: build
+          args: --release --all-features
