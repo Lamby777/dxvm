@@ -15,22 +15,22 @@ impl fmt::Display for OpcodeLookupError {
 }
 
 
-#[derive(Clone)]
-pub enum Instruction {
+#[derive(Clone, Debug, PartialEq)]
+pub enum INSTR {
 	Exit,
 	Push,
 	Pop,
 }
 
-impl TryFrom<u64> for Instruction {
+impl TryFrom<u64> for INSTR {
 	type Error = OpcodeLookupError;
 
-	fn try_from(opcode: u64) -> Result<Self, OpcodeLookupError> {
+	fn try_from(opcode: u64) -> Result<Self, Self::Error> {
 		match opcode {
-			0x0000000000000000	=> Ok(Self::Exit),
-			0x0000000000000001	=> Ok(Self::Push),
-			0x0000000000000002	=> Ok(Self::Pop),
-			_					=> Err(OpcodeLookupError),
+			0x00000000	=> Ok(Self::Exit),
+			0x00000001	=> Ok(Self::Push),
+			0x00000002	=> Ok(Self::Pop),
+			_			=> Err(OpcodeLookupError),
 		}
 	}
 }
