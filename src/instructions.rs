@@ -1,14 +1,36 @@
-use phf::phf_map;
+/*
+* Parse instructions from a binary
+*/
+
+use std::{error::Error, fmt};
+
+#[derive(Debug)]
+pub struct OpcodeLookupError;
+impl Error for OpcodeLookupError {}
+
+impl fmt::Display for OpcodeLookupError {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		write!(f, "Oh no, something bad went down")
+	}
+}
+
 
 #[derive(Clone)]
 pub enum Instruction {
 	Exit,
+	Push,
+	Pop,
 }
 
-static OPCODES: phf::Map<u64, Instruction> = phf_map! {
-	0x0000000000000000u64	=> Instruction::Exit,
-};
+impl TryFrom<u64> for Instruction {
+	type Error = OpcodeLookupError;
 
-pub fn opcode_to_instruction(opcode: u64) -> Option<Instruction> {
-	OPCODES.get(&opcode).cloned()
+	fn try_from(opcode: u64) -> Result<Self, OpcodeLookupError> {
+		match opcode {
+			0x0000000000000000	=> Ok(Self::Exit),
+			0x0000000000000001	=> Ok(Self::Push),
+			0x0000000000000002	=> Ok(Self::Pop),
+			_					=> Err(OpcodeLookupError),
+		}
+	}
 }
