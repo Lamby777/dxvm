@@ -6,17 +6,6 @@ mod parsing {
 	use super::*;
 
 	#[test]
-	fn do_nothing() -> Result<()> {
-		let res = execute_binary(
-			&[]
-		)?;
-
-		assert_eq!(res, 0);
-
-		Ok(())
-	}
-
-	#[test]
 	fn opcode_to_instr() -> Result<()> {
 		// Exit instruction
 		let exit_instr: INSTR = 0.try_into()?;
@@ -34,5 +23,16 @@ mod parsing {
 mod execution {
 	use super::*;
 	
-	//
+	#[test]
+	fn do_nothing() -> Result<()> {
+		let res = execute_binary(
+			&[
+				0x00000000,
+			]
+		)?;
+
+		assert_eq!(res, 0);
+
+		Ok(())
+	}
 }
