@@ -3,6 +3,7 @@
 */
 
 use std::{error::Error, fmt};
+use num_derive::FromPrimitive;
 
 #[derive(Debug)]
 pub struct OpcodeLookupError;
@@ -14,23 +15,20 @@ impl fmt::Display for OpcodeLookupError {
 	}
 }
 
-
-#[derive(Clone, Debug, PartialEq)]
+#[repr(u32)]
+#[derive(Clone, Debug, PartialEq, FromPrimitive)]
 pub enum INSTR {
-	Exit,
-	Push,
-	Pop,
+	Exit	= 0x00000000,
+	Push	= 0x00000001,
+	Pop		= 0x00000002,
 }
 
-impl TryFrom<u64> for INSTR {
+impl TryFrom<u32> for INSTR {
 	type Error = OpcodeLookupError;
-
-	fn try_from(opcode: u64) -> Result<Self, Self::Error> {
-		match opcode {
-			0x00000000	=> Ok(Self::Exit),
-			0x00000001	=> Ok(Self::Push),
-			0x00000002	=> Ok(Self::Pop),
-			_			=> Err(OpcodeLookupError),
-		}
+	
+	fn try_from(opcode: u32) -> Result<Self, Self::Error> {
+		let option = num::FromPrimitive::from_u32(opcode);
+		
+		option.ok_or_else(|| OpcodeLookupError)
 	}
 }
