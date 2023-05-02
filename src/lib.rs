@@ -15,15 +15,17 @@ pub type DxVMStack = Vec<u64>;
 
 pub fn execute_binary(bytecode: &[u64]) -> Result<i64> {
 	let exit_code;
-	let mut cursor = 0usize;
-	let mut stack1: DxVMStack = vec![];
+
+	let mut state = DxVMState {
+		cursor:	&mut 0,
+		stack:	&mut vec![],
+	};
 
 	loop {
 		// Run instruction
 		let res = interpret(
 			bytecode,
-			&mut cursor,
-			&mut stack1
+			&mut state,
 		);
 
 		match res {
@@ -41,10 +43,11 @@ pub fn execute_binary(bytecode: &[u64]) -> Result<i64> {
 
 pub fn interpret(
 	bytecode:	&[u64],
-	cursor:		&mut usize,
-	stack:		&mut DxVMStack
+	state:		&mut DxVMState,
 ) -> InstructionResult {
-	let opcode = bytecode[*cursor];
+	let DxVMState { cursor, stack } = state;
+
+	let opcode = bytecode[**cursor];
 
 	let instruction: INSTR = (opcode as u32)
 		.try_into().expect("Failed to parse opcode into instruction!");
@@ -55,12 +58,12 @@ pub fn interpret(
 	match instruction {
 		INSTR::Exit		=> {
 			// write a function to interpret dynamic stuff later
-			return InstructionResult::Exit(bytecode[*cursor + 1] as i64);
+			return InstructionResult::Exit(bytecode[**cursor + 1] as i64);
 		},
 
 		INSTR::Push		=> {
 			// same "do this later" ^^^
-			let val = bytecode[*cursor + 1];
+			let val = bytecode[**cursor + 1];
 			stack.push(val);
 
 			skip = Some(2);
@@ -76,8 +79,13 @@ pub fn interpret(
 	}
 
 	if let Some(v) = skip {
-		*cursor += v as usize;
+		**cursor += v as usize;
 	};
 
 	InstructionResult::Continue
+}
+
+pub struct DxVMState<'a> {
+	cursor:	&'a mut usize,
+	stack:	&'a mut DxVMStack,
 }
