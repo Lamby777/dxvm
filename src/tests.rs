@@ -27,7 +27,8 @@ mod execution {
 	fn do_nothing() -> Result<()> {
 		let res = execute_binary(
 			&[
-				0x00000000,
+				0x00000000, // EXIT
+				0, // exit code
 			]
 		)?;
 

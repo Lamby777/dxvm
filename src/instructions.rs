@@ -39,10 +39,3 @@ impl TryFrom<u32> for INSTR {
 		option.ok_or_else(|| OpcodeLookupError)
 	}
 }
-
-/// Stuff put here to condense lib.rs
-pub mod helper {
-	pub fn exit_program(bytecode: &mut core::slice::Iter<u64>) {
-		//
-	}
-}
