@@ -25,7 +25,7 @@ pub enum InstructionResult {
 	Exit(i64),
 }
 
-pub struct DxVMState<'a> {
-	pub cursor:	&'a mut usize,
-	pub stack:	&'a mut DxVMStack,
+pub struct DxVMState {
+	pub cursor:	usize,
+	pub stack:	DxVMStack,
 }
