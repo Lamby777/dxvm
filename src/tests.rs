@@ -33,7 +33,7 @@ mod execution {
 				]
 			)?;
 
-			assert_eq!(res, 0);
+			assert_eq!(res, n as i64);
 		}
 
 		Ok(())
