@@ -24,22 +24,10 @@ pub enum INSTR {
 	// Registers / Memory
 	Push				= 0x00010000,
 	Pop					= 0x00010001,
-	Store				= 0x00010002,
-	Deref				= 0x00010003,
 	
 	// For Convenience
 	Incr				= 0x00020000,
 	Decr				= 0x00020001,
-
-	// Logic / Arithmetic
-	NOT					= 0x00030000,
-	AND					= 0x00030001,
-	OR					= 0x00030002, // etc other logic gates later
-
-	Add					= 0x00031000,
-	Sub					= 0x00031001,
-	Mul					= 0x00031002,
-	Div					= 0x00031003,
 }
 
 impl TryFrom<u32> for INSTR {

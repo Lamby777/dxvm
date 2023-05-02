@@ -23,17 +23,8 @@ pub fn execute_binary(program_bytes: &[u64]) -> Result<i64> {
 			INSTR::Exit		=> todo!(),
 			INSTR::Push		=> todo!(),
 			INSTR::Pop		=> todo!(),
-			INSTR::Store	=> todo!(),
-			INSTR::Deref	=> todo!(),
 			INSTR::Incr		=> todo!(),
 			INSTR::Decr		=> todo!(),
-			INSTR::NOT		=> todo!(),
-			INSTR::AND		=> todo!(),
-			INSTR::OR		=> todo!(),
-			INSTR::Add		=> todo!(),
-			INSTR::Sub		=> todo!(),
-			INSTR::Mul		=> todo!(),
-			INSTR::Div		=> todo!(),
 		}
 	}
 
