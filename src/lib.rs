@@ -35,6 +35,8 @@ pub fn execute_binary(bytecode: &[u64]) -> Result<i64> {
 				// same "do this later" ^^^
 				let val = bytecode[cursor + 1];
 				stack1.push(val);
+
+				skip = Some(2);
 			},
 
 			INSTR::Pop		=> {
