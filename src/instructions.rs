@@ -18,9 +18,16 @@ impl fmt::Display for OpcodeLookupError {
 #[repr(u32)]
 #[derive(Clone, Debug, PartialEq, FromPrimitive)]
 pub enum INSTR {
-	Exit	= 0x00000000,
-	Push	= 0x00000001,
-	Pop		= 0x00000002,
+	// Core
+	Exit				= 0x00000000,
+
+	// Registers / Memory
+	Push				= 0x00010000,
+	Pop					= 0x00010001,
+	
+	// For Convenience
+	Incr				= 0x00020000,
+	Decr				= 0x00020001,
 }
 
 impl TryFrom<u32> for INSTR {

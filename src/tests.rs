@@ -1,26 +1,39 @@
 use crate::*;
 use instructions::INSTR;
 
-#[test]
-fn do_nothing() -> Result<()> {
-	let res = execute_binary(
-		&[]
-	)?;
+#[cfg(test)]
+mod parsing {
+	use super::*;
 
-	assert_eq!(res, 0);
+	#[test]
+	fn opcode_to_instr() -> Result<()> {
+		// Exit instruction
+		let exit_instr: INSTR = 0.try_into()?;
+		assert_eq!(exit_instr, INSTR::Exit);
 
-	Ok(())
+		// Invalid instruction
+		let invalid_instr: Result<INSTR, _> = 192_168.try_into();
+		assert!(invalid_instr.is_err());
+
+		Ok(())
+	}
 }
 
-#[test]
-fn opcode_to_instr() -> Result<()> {
-	// Exit instruction
-	let exit_instr: INSTR = 0.try_into()?;
-	assert_eq!(exit_instr, INSTR::Exit);
+#[cfg(test)]
+mod execution {
+	use super::*;
+	
+	#[test]
+	fn do_nothing() -> Result<()> {
+		let res = execute_binary(
+			&[
+				0x00000000, // EXIT
+				0, // exit code
+			]
+		)?;
 
-	// Invalid instruction
-	let invalid_instr: Result<INSTR, _> = 192_168.try_into();
-	assert!(invalid_instr.is_err());
+		assert_eq!(res, 0);
 
-	Ok(())
+		Ok(())
+	}
 }
