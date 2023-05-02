@@ -12,8 +12,9 @@ mod instructions;
 mod tests;
 
 pub fn execute_binary(bytecode: &[u64]) -> Result<i64> {
-	let mut cursor = 0usize;
 	let exit_code;
+	let mut cursor = 0usize;
+	let mut stack1: Vec<u64> = vec![];
 
 	loop {
 		let opcode = bytecode[cursor];
@@ -30,10 +31,19 @@ pub fn execute_binary(bytecode: &[u64]) -> Result<i64> {
 				break;
 			},
 
-			INSTR::Push		=> todo!(),
-			INSTR::Pop		=> todo!(),
+			INSTR::Push		=> {
+				// same "do this later" ^^^
+				let val = bytecode[cursor + 1];
+				stack1.push(val);
+			},
+
+			INSTR::Pop		=> {
+				// add some way to read the value later ("virtual" cpu registers???)
+				stack1.pop();
+			},
+
 			INSTR::Incr		=> todo!(),
-			INSTR::Decr		=> (), // prevent "unused code" warnings
+			INSTR::Decr		=> todo!(),
 		}
 
 		if let Some(v) = skip {
