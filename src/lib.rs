@@ -15,8 +15,6 @@ use classes::*;
 mod tests;
 
 pub fn execute_binary(bytecode: &[u64]) -> Result<i64> {
-	let exit_code;
-
 	let mut state = DxVMState {
 		cursor:	&mut 0,
 		stack:	&mut vec![],
@@ -31,15 +29,12 @@ pub fn execute_binary(bytecode: &[u64]) -> Result<i64> {
 
 		match res {
 			InstructionResult::Exit(v) => {
-				exit_code = v;
-				break;
+				return Ok(v)
 			}
 
 			_ => ()
 		}
 	}
-
-	Ok(exit_code)
 }
 
 pub fn interpret(
