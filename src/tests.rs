@@ -24,15 +24,17 @@ mod execution {
 	use super::*;
 	
 	#[test]
-	fn do_nothing() -> Result<()> {
-		let res = execute_binary(
-			&[
-				0x00000000, // EXIT
-				0, // exit code
-			]
-		)?;
+	fn exit_immediately() -> Result<()> {
+		for n in [0, 1, 12345] {
+			let res = execute_binary(
+				&[
+					0x00000000, // EXIT
+					n, // exit code
+				]
+			)?;
 
-		assert_eq!(res, 0);
+			assert_eq!(res, n as i64);
+		}
 
 		Ok(())
 	}
