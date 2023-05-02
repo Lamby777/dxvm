@@ -39,3 +39,8 @@ impl TryFrom<u32> for INSTR {
 		option.ok_or_else(|| OpcodeLookupError)
 	}
 }
+
+pub enum InstructionResult {
+	Continue,
+	Exit(i64),
+}
