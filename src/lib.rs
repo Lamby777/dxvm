@@ -3,15 +3,16 @@
 * - Cherry 4/27/2023
 */
 
-use instructions::{INSTR, InstructionResult};
+use instructions::{INSTR};
 use libdx::Result;
 
 mod instructions;
 
+mod classes;
+use classes::*;
+
 #[cfg(test)]
 mod tests;
-
-pub type DxVMStack = Vec<u64>;
 
 pub fn execute_binary(bytecode: &[u64]) -> Result<i64> {
 	let exit_code;
@@ -83,9 +84,4 @@ pub fn interpret(
 	};
 
 	InstructionResult::Continue
-}
-
-pub struct DxVMState<'a> {
-	cursor:	&'a mut usize,
-	stack:	&'a mut DxVMStack,
 }
